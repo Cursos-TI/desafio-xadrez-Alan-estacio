@@ -1,36 +1,76 @@
 #include <stdio.h>
- 
-int main() {
-    int t;
-    int c;
-    //torre se move 5 casas para direita
-     printf("TORRE MOVE-SE PARA:\n");
-    for ( t = 1; t <= 5; t++) {
-            printf("Direita\n", t);
-        }
-    printf("BISPO MOVE-SE PARA:\n"); //bispo se move 5 casas para cima na direita
-    
-    int b = 0;
-    while (b<5){
-     printf("CIMA, DIREITA\n", b);
-     b++;
-    }
 
-    printf("A RAINHA MOVE-SE:\n"); //a rainha se move 8 casas para esquerda
-int r = 0;
-do{
-printf("ESQUERDA\n", r);
-r++;
+void moverTorre(int casas) {
+    if (casas == 0) return; // condição de parada
+    printf("Direita\n");
+    moverTorre(casas - 1); // chamada recursiva
 }
-    while (r<8);
-    printf("CAVALO MOVE-SE:\n");
-for ( c = 1; c <=2; c++) {
-    printf("ABAIXO\n", c);
+
+void moverBispoRec(int casas) {
+    if (casas == 0) return;
+    printf("Cima, Direita\n");
+    moverBispoRec(casas - 1);
 }
-  c = 0;
-    while (c<1){
-     printf("ESQUERDA\n", c);
-     c++;
+
+void moverBispoLoop(int casas) {
+    for (int v = 0; v < casas; v++) {      // movimento vertical
+        for (int h = 0; h < casas; h++) {  // movimento horizontal
+            if (v == h) { 
+                printf("Cima, Direita\n");
+            }
+        }
     }
-    return 0;
+}
+
+void moverRainha(int casas) {
+    if (casas == 0) return;
+    printf("Esquerda\n");
+    moverRainha(casas - 1);
+}
+
+void moverCavalo(int movimentos) {
+    for (int i = 0; i < movimentos; i++) {
+        int passosCima = 0;
+        int passosDireita = 0;
+
+        // duas casas para cima
+        while (passosCima < 2) {
+            printf("Cima\n");
+            passosCima++;
+        }
+
+        // uma casa para direita
+        while (passosDireita < 1) {
+            printf("Direita\n");
+            passosDireita++;
+        }
+
+        // controle de fluxo
+        if (i == movimentos - 1) {
+            break; // encerra no último movimento
+        }
+    }
+}
+
+int main() {
+    int casasTorre = 5;
+    int casasBispo = 5;
+    int casasRainha = 8;
+    int movimentosCavalo = 1;
+
+    printf("TORRE MOVE-SE:\n");
+    moverTorre(casasTorre);
+
+    printf("\nBISPO MOVE-SE:\n");
+    moverBispoRec(casasBispo);
+
+    printf("\nBISPO MOVE-SE:\n");
+    moverBispoLoop(casasBispo);
+
+    printf("\nRAINHA MOVE-SE:\n");
+    moverRainha(casasRainha);
+
+    printf("\nCAVALO MOVE-SE:\n");
+    moverCavalo(movimentosCavalo);
+
 }
